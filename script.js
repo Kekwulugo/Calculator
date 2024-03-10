@@ -36,6 +36,10 @@ function getValue (event){
  let value = event.target.value;
  console.log(value);
 
+ let displayEl = document.querySelectorAll(".display");
+ console.log(displayEl);
+
+ displayEl.innerHTML = value;
 }
 
 let buttonsEl = document.querySelectorAll("button");
