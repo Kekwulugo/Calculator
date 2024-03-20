@@ -1,3 +1,7 @@
+let buttonsEl = document.querySelectorAll("button");
+let displayEl = document.querySelector(".display");
+let calculator = document.querySelector(".container");
+
 // calculator functions
 
 function add (a,b){
@@ -13,42 +17,93 @@ function multiply (a,b){
 }
 
 function divide (a,b){
- return a / b;
+   return a / b;
+ }
+ 
+function percent (a){
+ return a/100;
 }
 
 let firstNumber;
-let secondNumber;
+let secondNumber = 2;
 let operator;
 
+
+
+
 function operate (firstNumber, operator, secondNumber) {
- if (operator == "+"){
-  add(firstNumber,secondNumber);
- } else if( operator == "-"){
-  subtract(firstNumber,secondNumber);
- } else if (operator == "*"){
-  multiply(firstNumber, secondNumber);
+ console.log(operator);
+ if (operator === "+"){
+  displayEl.textContent = add(parseFloat(firstNumber),parseFloat(secondNumber));
+ } else if( operator === "-"){
+  displayEl.textContent = subtract(parseFloat(firstNumber),parseFloat(secondNumber));
+ } else if (operator === "*"){
+  displayEl.textContent = multiply(parseFloat(firstNumber),parseFloat(secondNumber));
+ } else if(operator === "/") {
+  displayEl.textContent = divide(parseFloat(firstNumber),parseFloat(secondNumber));
  } else {
-  divide (firstNumber, secondNumber);
+  displayEl.textContent = percent(parseFloat(firstNumber));
  }
 }
 
-function getValue (event){
- let value = event.target.value;
- console.log(value);
-
- let displayEl = document.querySelectorAll(".display");
- console.log(displayEl);
-
- displayEl.innerHTML = value;
-}
-
-let buttonsEl = document.querySelectorAll("button");
-
-buttonsEl.forEach( button => button.addEventListener("click", getValue));
 
 
+ 
 
-let equalBtn = document.querySelector("#equal");
+buttonsEl.forEach( button => button.addEventListener("click", ()=> {
+ 
+ const displayNumber = displayEl.textContent;
+ const key = button.value;
+ const buttonClass = button.className;
+
+ if(buttonClass === "number"){
+
+  if(displayNumber == 0 || calculator.dataset.previousKey === "operator" || calculator.dataset.previousKey === "equal"){
+   displayEl.textContent = key;
+   calculator.dataset.previousKey = "number";
+  } else {
+   displayEl.textContent = displayNumber + key;
+  }
+
+ } else if (buttonClass === "decimal" && !displayNumber.includes(".")){
+  console.log(displayNumber);
+  displayEl.textContent = displayNumber + ".";
+  calculator.dataset.previousKey = "decimal";
+
+ } else if (buttonClass === "operator"){
+    calculator.dataset.operator = key;
+    calculator.dataset.firstNumber = displayNumber;
+    calculator.dataset.previousKey = "operator";
+  
+  console.log(calculator.dataset.operator);
+  console.log(calculator.dataset.firstNumber); 
+  
+
+ } else if  (buttonClass === "clear"){
+  displayEl.textContent = 0;
+  calculator.dataset.previousKey = "clear";
+
+
+ } else if (buttonClass === "equal"){
+  calculator.dataset.previousKey = "equal";
+
+  let secondNumber = displayNumber;
+
+  console.log(calculator.dataset.firstNumber);
+  console.log(calculator.dataset.operator);
+  console.log(secondNumber);
+
+  operate(calculator.dataset.firstNumber, calculator.dataset.operator, secondNumber);
+
+ }
+
+
+
+}));
+
+
+
+
 
 
 
