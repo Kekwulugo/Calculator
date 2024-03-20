@@ -17,8 +17,12 @@ function multiply (a,b){
 }
 
 function divide (a,b){
+ if(b === 0){
+  return "No can do :("
+ } 
    return Math.round((a / b)*10000)/10000;
  }
+
  
 function percent (a){
  return a/100;
@@ -58,7 +62,7 @@ buttonsEl.forEach( button => button.addEventListener("click", ()=> {
 
  if(buttonClass === "number"){
 
-  if(displayNumber == 0 || calculator.dataset.previousKey === "operator" || calculator.dataset.previousKey === "equal"){
+  if(displayNumber === 0 ||  calculator.dataset.previousKey === "operator" || calculator.dataset.previousKey === "equal" ){
    displayEl.textContent = key;
    calculator.dataset.previousKey = "number";
   } else {
@@ -66,7 +70,6 @@ buttonsEl.forEach( button => button.addEventListener("click", ()=> {
   }
 
  } else if (buttonClass === "decimal" && !displayNumber.includes(".")){
-  console.log(displayNumber);
   displayEl.textContent = displayNumber + ".";
   calculator.dataset.previousKey = "decimal";
 
