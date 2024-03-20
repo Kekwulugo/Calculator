@@ -5,11 +5,11 @@ let calculator = document.querySelector(".container");
 // calculator functions
 
 function add (a,b){
- return a + b;
+ return  Math.round((a + b)*10000)/10000;
 }
 
 function subtract (a,b){
- return a - b;
+ return Math.round((a - b)*10000)/10000;
 }
 
 function multiply (a,b){
@@ -17,7 +17,7 @@ function multiply (a,b){
 }
 
 function divide (a,b){
-   return a / b;
+   return Math.round((a / b)*10000)/10000;
  }
  
 function percent (a){
